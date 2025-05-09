@@ -1,12 +1,12 @@
 pipeline {
     agent any
     tools {
-        nodejs 'NodeJS'
+        Nodejs 'NodeJS'
     }
     stages {
         stage('Checkout') {
             steps {
-                git url: '', branch: 'master'
+                git url: 'https://github.com/SuryaDivami/nodejs-jenkins-app.git', branch: 'master'
             }
         }
 
@@ -33,13 +33,13 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh """
                     echo Building Docker image...
-                    docker build -t dhiraj2001/nodejs-jenkins-app .
+                    docker build -t suryadas76/nodejs-jenkins-app .
 
                     echo Logging into Docker Hub...
                     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
                     echo Pushing Docker image...
-                    docker push dhiraj2001/nodejs-jenkins-app
+                    docker push suryadas76/nodejs-jenkins-app
 
                     echo Logging out...
                     docker logout
